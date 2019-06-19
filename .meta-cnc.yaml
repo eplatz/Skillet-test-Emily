@@ -1,0 +1,61 @@
+# skillet preamble information used by panhandler
+# ---------------------------------------------------------------------
+# unique snippet name
+name: Skillet-test-Emily
+# label used for menu selection
+label: Skillet-test-Emily
+description: Skillet for NetSecOpen configuration
+
+# type of device configuration
+# common types are panorama, panos, and template
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+type: panos
+# preload static or default-based templates
+extends:
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+    - Skillet-Test-Emily
+
+# ---------------------------------------------------------------------
+# end of preamble section
+
+# variables section
+# ---------------------------------------------------------------------
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints can be text, ip_address, or dropdown
+variables:
+  - name: rule_name
+    description: rule name
+    default: Skillet-Test-Emily
+    type_hint: text
+  - name: tag_color
+    description: tag color
+    default: red
+    type_hint: dropdown
+    dd_list:
+      - key: red
+        value: color1
+      - key: blue
+        value: color24
+
+   
+# ---------------------------------------------------------------------
+# end of variables section
+
+# snippets section
+# ---------------------------------------------------------------------
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: tag_color
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
+    file: tag_color.xml
+  - name: skillet_rule
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules
+    file: skillet_rule.xml
+
+# ---------------------------------------------------------------------
+# end of snippets section
